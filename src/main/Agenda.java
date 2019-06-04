@@ -7,9 +7,7 @@ package main;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import javax.swing.DefaultListModel;
-import javax.swing.ListModel;
 
 /**
  *
@@ -23,7 +21,7 @@ public class Agenda {
 
     public Agenda() {
         minha_agenda = new ArrayList<>();
-        listaContatos = new DefaultListModel<>();
+        listaContatos = new DefaultListModel<Contatos>();
     }
         
               
@@ -39,13 +37,20 @@ public class Agenda {
         this.minha_agenda.remove(i);
     }
     
+    public Contatos get_Contato(int i){
+        return minha_agenda.get(i);
+        
+    }
+    
     public void ordenarNome(){
         OrdenadorNome ordena = new OrdenadorNome();
         for(int i=0; i<minha_agenda.size()-1; i++){
             for(int j=i+1; j<minha_agenda.size(); j++){
                 ordena.compara(minha_agenda.get(i), minha_agenda.get(j), minha_agenda, i, j);
+                ordena.comparaLista(listaContatos.get(i).toString(), listaContatos.get(j).toString(), listaContatos, i, j);
             }
         }
+        
     }
     
     public void esvaziarAgenda(){

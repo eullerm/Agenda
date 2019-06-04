@@ -6,6 +6,7 @@
 package main;
 
 import java.util.List;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -14,5 +15,7 @@ import java.util.List;
 public abstract class Ordenador {
    
     public abstract void compara(Contatos p1, Contatos p2, List agenda, int i, int j);
+    
+    public abstract void comparaLista(String p1, String p2, DefaultListModel lista,int i, int j);
     
 }

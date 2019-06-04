@@ -42,7 +42,7 @@ public class TelaPrincipal extends JFrame{
         container.setLayout(new BorderLayout());
         //Botoes
         JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(240, 60));
+        panel.setPreferredSize(new Dimension(240, 70));
         panel.setLayout( new GridBagLayout());
         GridBagConstraints local = new GridBagConstraints();
         //Cria botão
@@ -50,29 +50,44 @@ public class TelaPrincipal extends JFrame{
         JButton remove = new JButton("Remover");
         JButton atualiza = new JButton("Atualizar");
         JButton apaga = new JButton("Apagar agenda");
+        JButton exibe = new JButton("Exibir");
+        JButton OK = new JButton("OK");
         //Coloca o tamanho
         adiciona.setPreferredSize(new Dimension(120, 20));
         remove.setPreferredSize(new Dimension(120, 20));
         atualiza.setPreferredSize(new Dimension(120, 20));
         apaga.setPreferredSize(new Dimension(120, 20));
+        exibe.setPreferredSize(new Dimension(120, 20));
+        OK.setPreferredSize(new Dimension(120, 20));
         //Adiciona uma fonte
         adiciona.setFont(new Font("Arial", Font.BOLD, 10));
         remove.setFont(new Font("Arial", Font.BOLD, 10));
         atualiza.setFont(new Font("Arial", Font.BOLD, 10));
         apaga.setFont(new Font("Arial", Font.BOLD, 10));
+        exibe.setFont(new Font("Arial", Font.BOLD, 10));
+        OK.setFont(new Font("Arial", Font.BOLD, 10));
+        //OK.setOpaque(false);
+        //OK.setContentAreaFilled(false);
+        OK.setEnabled(false);
         //Coloca no panel
         local.anchor = GridBagConstraints.SOUTHEAST;
         local.gridx = 0;
         local.gridy = 0;
-        panel.add(adiciona, local);
+        panel.add(exibe, local);
         local.gridx = 1;
         local.gridy = 0;
-        panel.add(remove, local);
+        panel.add(OK, local);
         local.gridx = 0;
+        local.gridy = 1;
+        panel.add(adiciona, local);
+        local.gridx = 0;
+        local.gridy = 2;
+        panel.add(remove, local);
+        local.gridx = 1;
         local.gridy = 1;
         panel.add(atualiza, local);
         local.gridx = 1;
-        local.gridy = 1;
+        local.gridy = 2;
         panel.add(apaga, local);
         
         //
@@ -111,6 +126,7 @@ public class TelaPrincipal extends JFrame{
         
         adiciona.addActionListener((ActionEvent e) -> {
             agenda.adicionarAgenda(linha1.getText(), linha2.getText(), linha3.getText());
+            agenda.ordenarNome();
             getContentPane().removeAll();
             TelaExibida(agenda);
             
@@ -123,6 +139,29 @@ public class TelaPrincipal extends JFrame{
                 agenda.list().remove(selecionado);
                 lista.clearSelection();
             }
+            TelaExibida(agenda);
+        });
+        
+        atualiza.addActionListener((ActionEvent e) -> {
+
+            int selecionado = lista.getSelectedIndex();
+            if(selecionado!=-1){
+                linha1.setText(agenda.get_Contato(selecionado).get_nome());
+                linha2.setText(agenda.get_Contato(selecionado).get_telefone());
+                linha3.setText(agenda.get_Contato(selecionado).get_email());
+                agenda.removerAgenda(selecionado);
+                agenda.list().remove(selecionado);
+            }
+            OK.setEnabled(true);
+            OK.addActionListener((ActionEvent o) -> {
+                
+                agenda.adicionarAgenda(linha1.getText(), linha2.getText(), linha3.getText());
+                agenda.ordenarNome();
+                getContentPane().removeAll();
+                TelaExibida(agenda);
+                
+            });
+
         });
         
         apaga.addActionListener((ActionEvent e) -> {
@@ -132,6 +171,16 @@ public class TelaPrincipal extends JFrame{
                 agenda.list().clear();
             }
             TelaExibida(agenda);
+        });
+        
+        exibe.addActionListener((ActionEvent e) -> {
+            
+            int selecionado = lista.getSelectedIndex();
+            if(selecionado!=-1){
+                linha1.setText(agenda.get_Contato(selecionado).get_nome());
+                linha2.setText(agenda.get_Contato(selecionado).get_telefone());
+                linha3.setText(agenda.get_Contato(selecionado).get_email());
+            }
         });
     }
    
