@@ -5,10 +5,6 @@
  */
 package main;
 
-
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 /**
  *
  * @author Euller
@@ -16,12 +12,12 @@ import java.util.Scanner;
 public class Contatos {
 
     private String nome;
-    private String telefone;
+    private int telefone;
     private String email;
     
     public Contatos(){
         nome = "";
-        telefone = "";
+        telefone = 0;
         email = "";
     }
     
@@ -29,7 +25,7 @@ public class Contatos {
         this.nome = nome;
     }
     
-    public void set_telefone(String telefone){
+    public void set_telefone(int telefone){
         this.telefone = telefone;
     }
     
@@ -41,7 +37,7 @@ public class Contatos {
         return nome;
     }
     
-    public String get_telefone(){
+    public int get_telefone(){
         return telefone;
     }
     

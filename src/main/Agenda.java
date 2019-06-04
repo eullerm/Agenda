@@ -24,8 +24,8 @@ public class Agenda {
         listaContatos = new DefaultListModel<Contatos>();
     }
         
-              
-    public void adicionarAgenda(String nome, String telefone, String email) { 
+    
+    public void adicionarAgenda(String nome, int telefone, String email) { 
         Contatos p = new Contatos();
         p.set_nome(nome);
         p.set_telefone(telefone);

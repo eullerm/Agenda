@@ -1,13 +1,12 @@
 package main;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.InputMismatchException;
 import javax.swing.*;
 
 
@@ -125,10 +124,15 @@ public class TelaPrincipal extends JFrame{
         revalidate();
         
         adiciona.addActionListener((ActionEvent e) -> {
-            agenda.adicionarAgenda(linha1.getText(), linha2.getText(), linha3.getText());
-            agenda.ordenarNome();
-            getContentPane().removeAll();
-            TelaExibida(agenda);
+            try{
+                agenda.adicionarAgenda(linha1.getText(), 
+                        Integer.parseInt(linha2.getText()), 
+                        linha3.getText());
+                agenda.ordenarNome();
+                getContentPane().removeAll();
+                TelaExibida(agenda);
+            }catch(InputMismatchException erro){
+            }
             
         });
         
@@ -147,18 +151,35 @@ public class TelaPrincipal extends JFrame{
             int selecionado = lista.getSelectedIndex();
             if(selecionado!=-1){
                 linha1.setText(agenda.get_Contato(selecionado).get_nome());
-                linha2.setText(agenda.get_Contato(selecionado).get_telefone());
+                linha2.setText(""+agenda.get_Contato(selecionado).get_telefone());
                 linha3.setText(agenda.get_Contato(selecionado).get_email());
                 agenda.removerAgenda(selecionado);
                 agenda.list().remove(selecionado);
             }
             OK.setEnabled(true);
+            adiciona.setEnabled(false);
+            remove.setEnabled(false);
+            exibe.setEnabled(false);
+            apaga.setEnabled(false);
+            atualiza.setEnabled(false);
             OK.addActionListener((ActionEvent o) -> {
                 
-                agenda.adicionarAgenda(linha1.getText(), linha2.getText(), linha3.getText());
-                agenda.ordenarNome();
-                getContentPane().removeAll();
-                TelaExibida(agenda);
+                try{
+                    agenda.adicionarAgenda(linha1.getText(), 
+                            Integer.parseInt(linha2.getText()), 
+                            linha3.getText());
+                    agenda.ordenarNome();
+                    getContentPane().removeAll();
+                    adiciona.setEnabled(true);
+                    remove.setEnabled(true);
+                    exibe.setEnabled(true);
+                    apaga.setEnabled(true);
+                    atualiza.setEnabled(true);
+                    TelaExibida(agenda);
+                }catch(InputMismatchException erro){
+                        
+                }
+                
                 
             });
 
@@ -175,12 +196,32 @@ public class TelaPrincipal extends JFrame{
         
         exibe.addActionListener((ActionEvent e) -> {
             
+            adiciona.setEnabled(false);
+            remove.setEnabled(false);
+            exibe.setEnabled(false);
+            apaga.setEnabled(false);
+            atualiza.setEnabled(false);
+            OK.setEnabled(true);
             int selecionado = lista.getSelectedIndex();
             if(selecionado!=-1){
                 linha1.setText(agenda.get_Contato(selecionado).get_nome());
-                linha2.setText(agenda.get_Contato(selecionado).get_telefone());
+                linha2.setText("" + agenda.get_Contato(selecionado).get_telefone());
                 linha3.setText(agenda.get_Contato(selecionado).get_email());
             }
+             OK.addActionListener((ActionEvent o) -> {
+             
+                adiciona.setEnabled(true);
+                remove.setEnabled(true);
+                exibe.setEnabled(true);
+                apaga.setEnabled(true);
+                atualiza.setEnabled(true);
+                
+                
+                getContentPane().removeAll();
+                TelaExibida(agenda);
+                
+                
+             });
         });
     }
    
